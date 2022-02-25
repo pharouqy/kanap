@@ -233,7 +233,7 @@ function postForm() {
         console.log(data);
         localStorage.clear();
         localStorage.setItem("order", JSON.stringify(data.orderId));
-        window.location.href = "http://localhost:3000/confirmation";
+        window.location.href = "confirmation.html";
       })
       .catch((err) => console.log(err));
   });
