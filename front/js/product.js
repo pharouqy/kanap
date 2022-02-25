@@ -8,7 +8,6 @@ function getKanap() {
     .then((response) => response.json())
     .then((data) => {
       displayKanap(data);
-      console.log(data);
     })
     .catch((error) => {
       console.log(error);
@@ -61,7 +60,7 @@ function addToCart() {
       quantity: quantity,
       //total: total,
     }; // create object
-    if (quantity > 0) {
+    if (quantity > 0 && color !== "") {
       // if quantity > 0
       if (localStorage.getItem("cart") === null) {
         cart = [];
@@ -86,6 +85,8 @@ function addToCart() {
         localStorage.setItem("cart", JSON.stringify(cart)); // set cart
         window.location.href = "cart.html";
       }
+    } else {
+      alert("Quantity must be greater than 0 & color must be selected");
     }
   });
 }
