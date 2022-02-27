@@ -6,4 +6,5 @@ function displayOrderId() {
   // displayOrderId
   let orderIdContainer = document.getElementById("orderId");
   orderIdContainer.innerHTML = `${orderId}`;
+  localStorage.clear();
 }

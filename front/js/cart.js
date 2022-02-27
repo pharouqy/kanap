@@ -6,76 +6,80 @@ postForm(); // postForm
 
 function getData() {
   // getData
-  fetch(`http://localhost:3000/api/products`) // fetch kanap
-    .then((response) => response.json()) // get response
-    .then((data) => {
-      // get data
-      data.forEach((item) => {
-        // for each item in data
-        let cartContainer = document.getElementById("cart__items");
-        cart.forEach((element) => {
-          // for each element in cart
-          if (element.id === item._id) {
-            let article = document.createElement("article");
-            article.classList.add("cart__item");
-            article.setAttribute("data-id", item._id);
-            article.setAttribute("data-color", element.color);
-            cartContainer.appendChild(article);
-            let divImg = document.createElement("div");
-            divImg.classList.add("cart__item__img");
-            article.appendChild(divImg);
-            let img = document.createElement("img");
-            img.setAttribute("src", item.imageUrl);
-            divImg.appendChild(img);
-            let divInfo = document.createElement("div");
-            divInfo.classList.add("cart__item__info");
-            article.appendChild(divInfo);
-            let divDescription = document.createElement("div");
-            divDescription.classList.add("cart__item__description");
-            divInfo.appendChild(divDescription);
-            let h2 = document.createElement("h2");
-            h2.innerHTML = item.name;
-            divDescription.appendChild(h2);
-            let color = document.createElement("p");
-            color.innerHTML = element.color;
-            divDescription.appendChild(color);
-            let price = document.createElement("p");
-            price.innerHTML = `${item.price} €`;
-            divDescription.appendChild(price);
-            let divSettings = document.createElement("div");
-            divSettings.classList.add("cart__item__settings");
-            divInfo.appendChild(divSettings);
-            let divQuantity = document.createElement("div");
-            divQuantity.classList.add("cart__item__quantity");
-            divSettings.appendChild(divQuantity);
-            let titleQuant = document.createElement("p");
-            titleQuant.innerHTML = `Qté : `;
-            divSettings.appendChild(titleQuant);
-            let inputQuant = document.createElement("input");
-            inputQuant.classList.add("itemQuantity");
-            inputQuant.setAttribute("type", "number");
-            inputQuant.setAttribute("value", element.quantity);
-            inputQuant.setAttribute("min", "1");
-            inputQuant.setAttribute("max", "100");
-            changeQuantity(inputQuant); // changeQuantity
-            divSettings.appendChild(inputQuant);
-            let divDelete = document.createElement("div");
-            divDelete.classList.add("cart__item__content__settings__delete");
-            divSettings.appendChild(divDelete);
-            let buttonDelete = document.createElement("button");
-            buttonDelete.classList.add("deleteItem");
-            buttonDelete.innerHTML = "Supprimer";
-            divDelete.appendChild(buttonDelete);
-            displayTotalPrice(item); // displayTotalPrice&Quantity
-          }
+  if (cart !== null) {
+    fetch(`http://localhost:3000/api/products`) // fetch kanap
+      .then((response) => response.json()) // get response
+      .then((data) => {
+        // get data
+        data.forEach((item) => {
+          // for each item in data
+          let cartContainer = document.getElementById("cart__items");
+          cart.forEach((element) => {
+            // for each element in cart
+            if (element.id === item._id) {
+              let article = document.createElement("article");
+              article.classList.add("cart__item");
+              article.setAttribute("data-id", item._id);
+              article.setAttribute("data-color", element.color);
+              cartContainer.appendChild(article);
+              let divImg = document.createElement("div");
+              divImg.classList.add("cart__item__img");
+              article.appendChild(divImg);
+              let img = document.createElement("img");
+              img.setAttribute("src", item.imageUrl);
+              divImg.appendChild(img);
+              let divInfo = document.createElement("div");
+              divInfo.classList.add("cart__item__info");
+              article.appendChild(divInfo);
+              let divDescription = document.createElement("div");
+              divDescription.classList.add("cart__item__description");
+              divInfo.appendChild(divDescription);
+              let h2 = document.createElement("h2");
+              h2.innerHTML = item.name;
+              divDescription.appendChild(h2);
+              let color = document.createElement("p");
+              color.innerHTML = element.color;
+              divDescription.appendChild(color);
+              let price = document.createElement("p");
+              price.innerHTML = `${item.price} €`;
+              divDescription.appendChild(price);
+              let divSettings = document.createElement("div");
+              divSettings.classList.add("cart__item__settings");
+              divInfo.appendChild(divSettings);
+              let divQuantity = document.createElement("div");
+              divQuantity.classList.add("cart__item__quantity");
+              divSettings.appendChild(divQuantity);
+              let titleQuant = document.createElement("p");
+              titleQuant.innerHTML = `Qté : `;
+              divSettings.appendChild(titleQuant);
+              let inputQuant = document.createElement("input");
+              inputQuant.classList.add("itemQuantity");
+              inputQuant.setAttribute("type", "number");
+              inputQuant.setAttribute("value", element.quantity);
+              inputQuant.setAttribute("min", "1");
+              inputQuant.setAttribute("max", "100");
+              changeQuantity(inputQuant); // changeQuantity
+              divSettings.appendChild(inputQuant);
+              let divDelete = document.createElement("div");
+              divDelete.classList.add("cart__item__content__settings__delete");
+              divSettings.appendChild(divDelete);
+              let buttonDelete = document.createElement("button");
+              buttonDelete.classList.add("deleteItem");
+              buttonDelete.innerHTML = "Supprimer";
+              divDelete.appendChild(buttonDelete);
+              displayTotalPrice(item); // displayTotalPrice&Quantity
+            }
+          });
         });
+        deleteItem(); // deleteItem
+      })
+      .catch((error) => {
+        // error
+        console.log(error); // error
       });
-      deleteItem(); // deleteItem
-    })
-    .catch((error) => {
-      // error
-      console.log(error); // error
-    });
+  } else {
+    alert("Votre panier est vide 1");
+  }
 }
 
 function changeQuantity(input) {
@@ -137,7 +141,8 @@ function deleteItem() {
 }
 
 // Regex check inputs
-function validateEmail(email) { // validateEmail
+function validateEmail(email) {
+  // validateEmail
   const regex =
     /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
   return regex.test(String(email).toLowerCase());
@@ -146,7 +151,8 @@ function onlyLetter(word) {
   const regexOnlyLetter = /^[a-zA-Z ,.'-]+$/; // only letters
   return regexOnlyLetter.test(String(word).toLowerCase());
 }
-function validateAdress(adress) { // validateAdress
+function validateAdress(adress) {
+  // validateAdress
   const regex = /^[a-zA-Z0-9\s\-]+$/;
   return regex.test(String(adress).toLowerCase());
 }
@@ -207,34 +213,51 @@ function postForm() {
     let address = document.getElementById("address").value;
     let city = document.getElementById("city").value;
 
-    let arrIds = [];
-    cart.map((element) => { // map cart
-      return arrIds.push(element.id);
-    });
-    const order = {
-      contact: {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        address: address,
-        city: city,
-      },
-      products: arrIds,
-    };
-    fetch("http://localhost:3000/api/products/order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(order),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        localStorage.clear();
-        localStorage.setItem("order", JSON.stringify(data.orderId));
-        window.location.href = "confirmation.html";
-      })
-      .catch((err) => console.log(err));
+    let arrIds = []; // array of ids
+    if (cart !== null) {
+      cart.map((element) => {
+        // map cart
+        return arrIds.push(element.id);
+      });
+      const order = {
+        contact: {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          address: address,
+          city: city,
+        },
+        products: arrIds,
+      };
+      if (
+        order !== null &&
+        firstName !== "" &&
+        lastName !== "" &&
+        email !== "" &&
+        address !== "" &&
+        city !== ""
+      ) {
+        fetch("http://localhost:3000/api/products/order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(order),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            localStorage.clear(); // clear localStorage
+            localStorage.setItem("order", JSON.stringify(data.orderId)); // set orderId
+            window.location.href = "confirmation.html"; // redirect to confirmation page
+          })
+          .catch((err) => console.log(err));
+      } else {
+        alert(
+          "Veuillez remplir tous les champs && choisir au moins un produit"
+        );
+      }
+    } else {
+      alert("Votre panier est vide 2");
+    }
   });
 }

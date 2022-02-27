@@ -1,17 +1,20 @@
 getKanaps();
 
-function getKanaps() { // get kanap
+function getKanaps() {
+  // get kanap
   fetch(`http://localhost:3000/api/products`) // fetch kanap
     .then((response) => response.json()) // get response
-    .then((data) => { // get data
-      console.log(data);
+    .then((data) => {
+      // get data
       displayKanap(data); // display kanap
     })
-    .catch((error) => { // error
+    .catch((error) => {
+      // error
       console.log(error); // error
     });
 }
-function displayKanap(kanap) { // display kanap
+function displayKanap(kanap) {
+  // display kanap
   const kanapContainer = document.getElementById("items");
   kanap.forEach((item) => {
     let urlKanap = `product.html?id=${item._id}`; // url kanap
