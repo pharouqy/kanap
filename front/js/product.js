@@ -1,4 +1,4 @@
-const id = new URLSearchParams(window.location.search).get("id");
+const id = new URLSearchParams(window.location.search).get("id"); // Récuperel'id depuis l'url
 
 getKanap();
 addToCart();
@@ -42,40 +42,36 @@ function colorSelector(colors) {
 }
 
 function addToCart() {
-  const btnAddToCart = document.getElementById("addToCart");
+  const btnAddToCart = document.getElementById("addToCart"); // get addToCart button
   btnAddToCart.addEventListener("click", () => {
     // addToCart
     let cart = JSON.parse(localStorage.getItem("cart"));
     let title = document.getElementById("title").textContent; // get name
-    //let price = document.getElementById("price").textContent; // get price
     let color = document.getElementById("colors").value; // get color
     let quantity = document.getElementById("quantity").value; // get quantity
-    //let total = price * quantity; // get total
     let cartItem = {
       // create cartItem
-      id : id,
-      title: title,
-      //price: price,
-      color: color,
-      quantity: quantity,
-      //total: total,
+      id : id, // id
+      title: title, // title
+      color: color, // color
+      quantity: quantity, // quantity
     }; // create object
     if (quantity > 0 && color !== "") {
       // if quantity > 0
       if (localStorage.getItem("cart") === null) {
-        cart = [];
-        cart.push(cartItem);
-        localStorage.setItem("cart", JSON.stringify(cart));
-        window.location.href = "cart.html";
+        cart = []; // initialize cart
+        cart.push(cartItem); // push cartItem
+        localStorage.setItem("cart", JSON.stringify(cart)); // Mettre le tableau dans le local storage
+        window.location.href = "cart.html"; // redirect to cart
       } else {
-        let flagId = false;
+        let flagId = false; // flag id
         for (let el in cart) {
           if (title === cart[el].title && color === cart[el].color) {
             // if title and color is the same
             cart[el].quantity =
               parseInt(cart[el].quantity) + parseInt(quantity);
             flagId = true;
-            break;
+            break; // Arreter la boucle
           }
         }
         if (flagId === false) {
@@ -83,10 +79,10 @@ function addToCart() {
           cart.push(cartItem);
         }
         localStorage.setItem("cart", JSON.stringify(cart)); // set cart
-        window.location.href = "cart.html";
+        window.location.href = "cart.html"; // redirect to cart
       }
     } else {
-      alert("Quantity must be greater than 0 & color must be selected");
+      alert("La quantité doit etre superieur à 0 && une couleur doit etre choisie");
     }
   });
 }

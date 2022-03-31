@@ -6,6 +6,7 @@ function getKanaps() {
     .then((response) => response.json()) // get response
     .then((data) => {
       // get data
+      console.table(data);
       displayKanap(data); // display kanap
     })
     .catch((error) => {
@@ -15,9 +16,9 @@ function getKanaps() {
 }
 function displayKanap(kanap) {
   // display kanap
-  const kanapContainer = document.getElementById("items");
-  kanap.forEach((item) => {
-    let urlKanap = `product.html?id=${item._id}`; // url kanap
+  const kanapContainer = document.getElementById("items"); // get kanap container
+  kanap.forEach((item) => { // for each item
+    let urlKanap = `product.html?id=${item._id}`; // url kanap syntaxe d'interpolation
     let kanapLink = document.createElement("a");
     kanapLink.href = urlKanap;
     kanapContainer.appendChild(kanapLink);
