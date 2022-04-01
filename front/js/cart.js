@@ -106,7 +106,7 @@ function changeQuantity(input) {
           cart[j].quantity = value;
           console.log(cart[j]);
           localStorage.setItem("cart", JSON.stringify(cart));
-          //location.reload();
+          location.reload();
         }
       }
     }
