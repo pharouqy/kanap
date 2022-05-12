@@ -1,4 +1,4 @@
-getKanaps();
+getKanaps(); // get kanap
 
 function getKanaps() {
   // get kanap
@@ -17,7 +17,8 @@ function getKanaps() {
 function displayKanap(kanap) {
   // display kanap
   const kanapContainer = document.getElementById("items"); // get kanap container
-  kanap.forEach((item) => { // for each item
+  kanap.forEach((item) => {
+    // for each item
     let urlKanap = `product.html?id=${item._id}`; // url kanap syntaxe d'interpolation
     let kanapLink = document.createElement("a");
     kanapLink.href = urlKanap;

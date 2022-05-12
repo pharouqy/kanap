@@ -51,12 +51,12 @@ function addToCart() {
     let quantity = document.getElementById("quantity").value; // get quantity
     let cartItem = {
       // create cartItem
-      id : id, // id
+      id: id, // id
       title: title, // title
       color: color, // color
       quantity: quantity, // quantity
     }; // create object
-    if (quantity > 0 && color !== "") {
+    if (quantity > 0 && quantity <= 100 && color !== "") {
       // if quantity > 0
       if (localStorage.getItem("cart") === null) {
         cart = []; // initialize cart
@@ -82,7 +82,9 @@ function addToCart() {
         window.location.href = "cart.html"; // redirect to cart
       }
     } else {
-      alert("La quantité doit etre superieur à 0 && une couleur doit etre choisie");
+      alert(
+        "La quantité doit etre superieur à 0 && une couleur doit etre choisie"
+      );
     }
   });
 }

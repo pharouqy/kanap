@@ -18,6 +18,7 @@ function getData() {
           cart.forEach((element) => {
             // for each element in cart
             if (element.id === item._id) {
+              // if element.id is equal to item._id
               let article = document.createElement("article");
               article.classList.add("cart__item");
               article.setAttribute("data-id", item._id); // set dataId
@@ -30,10 +31,10 @@ function getData() {
               img.setAttribute("src", item.imageUrl);
               divImg.appendChild(img);
               let divInfo = document.createElement("div");
-              divInfo.classList.add("cart__item__info");
+              divInfo.classList.add("cart__item__content");
               article.appendChild(divInfo);
               let divDescription = document.createElement("div");
-              divDescription.classList.add("cart__item__description");
+              divDescription.classList.add("cart__item__content__description");
               divInfo.appendChild(divDescription);
               let h2 = document.createElement("h2");
               h2.innerHTML = item.name;
@@ -45,10 +46,12 @@ function getData() {
               price.innerHTML = `${item.price} €`;
               divDescription.appendChild(price);
               let divSettings = document.createElement("div");
-              divSettings.classList.add("cart__item__settings");
+              divSettings.classList.add("cart__item__content__settings");
               divInfo.appendChild(divSettings);
               let divQuantity = document.createElement("div");
-              divQuantity.classList.add("cart__item__quantity");
+              divQuantity.classList.add(
+                "cart__item__content__settings__quantity"
+              );
               divSettings.appendChild(divQuantity);
               let titleQuant = document.createElement("p");
               titleQuant.innerHTML = `Qté : `;
@@ -86,15 +89,16 @@ function getData() {
 
 function changeQuantity(input) {
   // changeQuantity
-  // changeQuantity
   input.addEventListener("change", (e) => {
     // on change
     e.stopPropagation(); // stop propagation
     console.log(e.target.value); // e.target.value
     //let value = e.target.value; // value
     let values = document.getElementsByClassName("itemQuantity");
-    for (let i = 0; i < values.length; i++) { // iterate over the values
-      for (let j = 0; j < cart.length; j++) { // iterate over the cart
+    for (let i = 0; i < values.length; i++) {
+      // iterate over the values
+      for (let j = 0; j < cart.length; j++) {
+        // iterate over the cart
         // for each value
         let value = values[i].value;
         let dataId =
@@ -104,9 +108,8 @@ function changeQuantity(input) {
         if (dataId === cart[j].id && dataColor === cart[j].color) {
           // if dataId and dataColor are equal to cart[i]
           cart[j].quantity = value;
-          console.log(cart[j]);
-          localStorage.setItem("cart", JSON.stringify(cart));
-          location.reload();
+          localStorage.setItem("cart", JSON.stringify(cart)); // set cart
+          location.reload(); // reload
         }
       }
     }
@@ -184,39 +187,49 @@ function getForm() {
     inputs.addEventListener("change", (e) => {
       // on blur
       if (e.target.name === "firstName") {
+        let firstName = document.getElementById("firstNameErrorMsg");
         // if input name is firstName
         if (!onlyLetter(e.target.value)) {
           // if only letters
-          let firstName = document.getElementById("firstNameErrorMsg");
           firstName.innerHTML = "Veuillez introduire un prénom valide";
+        } else {
+          firstName.innerHTML = "";
         }
       } else if (e.target.name === "lastName") {
+        let lastName = document.getElementById("lastNameErrorMsg");
         // if input name is lastName
         if (!onlyLetter(e.target.value)) {
           // if only letters
-          let lastName = document.getElementById("lastNameErrorMsg");
           lastName.innerHTML = "Veuillez introduire un nom valide";
+        } else {
+          lastName.innerHTML = "";
         }
       } else if (e.target.name === "email") {
+        let email = document.getElementById("emailErrorMsg");
         // if input name is email
         if (!validateEmail(e.target.value)) {
           // if email is valid
-          let email = document.getElementById("emailErrorMsg");
           email.innerHTML = "Veuillez introduire un email valide";
+        } else {
+          email.innerHTML = "";
         }
       } else if (e.target.name === "address") {
+        let adress = document.getElementById("addressErrorMsg");
         // if input name is adress
         if (!validateAdress(e.target.value)) {
           // if adress is valid
-          let adress = document.getElementById("addressErrorMsg");
           adress.innerHTML = "Veuillez introduire une adresse valide";
+        } else {
+          adress.innerHTML = "";
         }
       } else if (e.target.name === "city") {
+        let city = document.getElementById("cityErrorMsg");
         // if input name is city
         if (!onlyLetter(e.target.value)) {
           // if only letters
-          let city = document.getElementById("cityErrorMsg");
           city.innerHTML = "Veuillez introduire une ville valide";
+        } else {
+          city.innerHTML = "";
         }
       }
     });
@@ -274,7 +287,7 @@ function postForm() {
           .then((data) => {
             localStorage.clear(); // clear localStorage
             localStorage.setItem("order", JSON.stringify(data.orderId)); // set orderId
-            window.location.href = "confirmation.html"; // redirect to confirmation page
+            window.location.href = "confirmation.html?orderid=" + data.orderId; // redirect to confirmation page
           })
           .catch((err) => console.log(err));
       } else {
