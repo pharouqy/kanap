@@ -94,23 +94,31 @@ function changeQuantity(input) {
     e.stopPropagation(); // stop propagation
     console.log(e.target.value); // e.target.value
     //let value = e.target.value; // value
-    let values = document.getElementsByClassName("itemQuantity");
-    for (let i = 0; i < values.length; i++) {
-      // iterate over the values
-      for (let j = 0; j < cart.length; j++) {
-        // iterate over the cart
-        // for each value
-        let value = values[i].value;
-        let dataId =
-          document.getElementsByClassName("cart__item")[i].dataset.id; // get dataId
-        let dataColor =
-          document.getElementsByClassName("cart__item")[i].dataset.color; // get dataColor
-        if (dataId === cart[j].id && dataColor === cart[j].color) {
-          // if dataId and dataColor are equal to cart[i]
-          cart[j].quantity = value;
-          localStorage.setItem("cart", JSON.stringify(cart)); // set cart
-          location.reload(); // reload
+    if (e.target.value > 0 && e.target.value <= 100) {
+      let values = document.getElementsByClassName("itemQuantity");
+      for (let i = 0; i < values.length; i++) {
+        // iterate over the values
+        for (let j = 0; j < cart.length; j++) {
+          // iterate over the cart
+          // for each value
+          let value = values[i].value;
+          let dataId =
+            document.getElementsByClassName("cart__item")[i].dataset.id; // get dataId
+          let dataColor =
+            document.getElementsByClassName("cart__item")[i].dataset.color; // get dataColor
+          if (dataId === cart[j].id && dataColor === cart[j].color) {
+            // if dataId and dataColor are equal to cart[i]
+            cart[j].quantity = value;
+            localStorage.setItem("cart", JSON.stringify(cart)); // set cart
+            location.reload(); // reload
+          }
         }
+      }
+    } else {
+      for (let i = 0; i < cart.length; i++) {
+        e.target.value = cart[i].quantity;
+        alert("Veuillez entrer une valeur entre 1 et 100");
+        break;
       }
     }
   });
